@@ -8,11 +8,10 @@ function displayTime() {
   setInterval(displayTime, 1000);
 
   var currentHour = (new Date()).getHours();
-//   console.log(currentHour)
+
   $('.colorcode')
     .each(function(){
       var val = parseInt($(this).prop('id'));
-      console.log(val)
       if(val > currentHour && val < currentHour + 11 ){
         $(this).css('background-color','#90EE90');
       }else if(val < currentHour && val > currentHour-11){
@@ -30,20 +29,8 @@ function displayTime() {
           .end().eq( 1 ).button( {
             icon: "ui-icon-gear",
             showLabel: false
-          } ).end().eq( 2 ).button( {
-            icon: "ui-icon-gear"
-          } ).end().eq( 3 ).button( {
-            icon: "ui-icon-gear",
-            iconPosition: "end"
-          } ).end().eq( 4 ).button( {
-            icon: "ui-icon-gear",
-            iconPosition: "top"
-          } ).end().eq( 5 ).button( {
-            icon: "ui-icon-gear",
-            iconPosition: "bottom"
           } );
       } );
-
       const noteForm = document.querySelector(".note-form");
       const noteInput = document.querySelector(".note-input");
       const noteSubmit = document.querySelector(".note-submit");
@@ -52,7 +39,7 @@ function displayTime() {
       let notesStorage = localStorage.getItem("notes")
         ? JSON.parse(localStorage.getItem("notes"))
         : [];
-
+function firstTime(){
       noteForm.addEventListener("submit", (e) => {
         e.preventDefault();
         notesStorage.push(noteInput.value);
@@ -72,10 +59,14 @@ function displayTime() {
         listBuilder(note);
       });
 
-      const deleteNote = (btn) => {
-        let el = btn.parentNode;
-        const index = [...el.parentElement.children].indexOf(el);
-        notesStorage.splice(index, 1);
-        localStorage.setItem("notes", JSON.stringify(notesStorage));
-        el.remove();
-      };
+      
+    }
+  
+    noteSubmit.addEventListener("click", firstTime)
+    const deleteNote = (btn) => {
+      let el = btn.parentNode;
+      const index = [...el.parentElement.childNodes].indexOf(el);
+      notesStorage.splice(index, 2);
+      localStorage.setItem("notes", JSON.stringify(notesStorage));
+      el.remove();
+    };
